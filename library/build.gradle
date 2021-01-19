@@ -1,40 +1,90 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion build_versions.compileSdk
+    buildToolsVersion build_versions.buildTools
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion build_versions.minSdk
+        targetSdkVersion build_versions.targetSdk
+        versionCode app_version.versionCode
+        versionName app_version.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.ro"
-    }
+        consumerProguardFiles "consumer-rules.pro"
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+
+        ndk {
+            abiFilters "arm64-v8a","armeabi-v7a"
         }
     }
 
 
+
     dependencies {
         implementation fileTree(dir: "libs", include: ["*.jar"])
-        implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        implementation 'androidx.core:core-ktx:1.1.0'
-        implementation 'androidx.appcompat:appcompat:1.1.0'
-        testImplementation 'junit:junit:4.12'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+        //ARouter
+        api 'com.alibaba:arouter-api:1.5.1'
+
+        //multidex
+        implementation 'androidx.multidex:multidex:2.0.1'
+
+        //leakcanary
+        debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+
+        //permission
+        api 'com.permissionx.guolindev:permissionx:1.4.0'
+
+        //bugly
+        api 'com.tencent.bugly:crashreport:latest.release'
+        api 'com.tencent.bugly:nativecrashreport:latest.release'
+
+        // lifecycle
+        api 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+        api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+        api 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
+        api 'androidx.lifecycle:lifecycle-livedata:2.2.0'
+        api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+        api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+        api "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07"
+
+        //navigation
+        api 'androidx.navigation:navigation-runtime:2.3.0'
+
+        api 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
+        // 下拉刷新
+        api  'com.scwang.smart:refresh-layout-kernel:2.0.1'
+        api  'com.scwang.smart:refresh-header-classics:2.0.1'
+        api  'com.scwang.smart:refresh-footer-classics:2.0.1'
+
+        //网络请求
+        api 'com.ljx.rxhttp:rxhttp:2.5.1'
+        //rxhttp v2.2.2版本起，需要手动依赖okhttp
+        api 'com.squareup.okhttp3:okhttp:4.9.0'
+        //生成RxHttp类
+        kapt 'com.ljx.rxhttp:rxhttp-compiler:2.5.1'
+        //管理协程生命周期，页面销毁，关闭请求
+        api 'com.ljx.rxlife:rxlife-coroutine:2.0.1'
+        //状态栏
+        api 'com.gyf.immersionbar:immersionbar:3.0.0'
+        //浏览器
+        api 'com.just.agentweb:agentweb-androidx:4.1.4'
+        //divider
+        api 'com.github.fondesa:recycler-view-divider:3.3.0'
+
+        api project(":architecture")
     }
 }
+
 
 //发布到jcenter
 //apply plugin: 'com.novoda.bintray-release'

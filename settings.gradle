@@ -1,3 +1,5 @@
+include ':architecture'
 include ':library'
 include ':app'
+include ':architecture'
 rootProject.name = "MvvmArchitecture"
