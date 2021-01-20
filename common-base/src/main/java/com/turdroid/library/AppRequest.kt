@@ -1,0 +1,1 @@
+package com.turdroid.libraryimport com.turdroid.library.base.BaseRequestobject AppRequest : BaseRequest() {}
