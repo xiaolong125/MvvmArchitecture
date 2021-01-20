@@ -46,6 +46,10 @@ android {
         }
     }
 
+//    dataBinding {
+//        enabled = true
+//    }
+
     buildFeatures{
         dataBinding = true
     }
@@ -81,5 +85,5 @@ android {
 dependencies {
 
     kapt 'com.alibaba:arouter-compiler:1.5.1'
-    api project(':common-base')
+    api project(':mvvmArchitecture')
 }
