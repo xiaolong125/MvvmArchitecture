@@ -34,5 +34,5 @@ task clean(type: Delete) {
 }
 
 ext {
-    isBuildModule = false
+    isBuildModule = true
 }
